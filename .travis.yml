@@ -1,0 +1,9 @@
+
+language: java
+jdk:
+  - oraclejdk8
+services:
+  - postgresql
+before_install:
+  - chmod +x mvnw
+- psql -U postgres -tc "SELECT 1 FROM pg_database WHERE datname = 'album_musical'" | grep -q 1 || psql -U postgres -c "CREATE DATABASE album_musical"
