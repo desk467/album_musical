@@ -1,9 +1,10 @@
 package com.desk467.album.entidades;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Objects;
 
 
@@ -15,10 +16,20 @@ public class Artista {
     private Long id;
 
     @Column
+    @NotBlank(message = "Campo 'nome' é obrigatório.")
+    @Size(min = 3, max = 50)
     private String nome;
 
     @Column
+    @NotBlank(message = "Campo 'nacionalidade' é obrigatório.")
+    @Size(min = 3, max = 50, message = "Campo 'nacionalidade' deve possuir entre 3 e 50 caracteres")
     private String nacionalidade;
+
+
+    @OneToMany
+    private Collection<Album> albuns = new ArrayList<>();
+
+    public Artista() {}
 
     public Artista(Long id) {
         this.id = id;
@@ -53,6 +64,15 @@ public class Artista {
     public void setNacionalidade(String nacionalidade) {
         this.nacionalidade = nacionalidade;
     }
+
+    public Collection<Album> getAlbuns() {
+        return albuns;
+    }
+
+    public void setAlbuns(Collection<Album> albuns) {
+        this.albuns = albuns;
+    }
+
 
     @Override
     public boolean equals(Object o) {
